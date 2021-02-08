@@ -11,14 +11,6 @@ def request(url,token = nil)
     return JSON.parse(response.read_body)
 end
 
-=begin
-def buid_web_page(info_hash)
-    File.open('index.html', 'w') do |file|
-    puts info_hash["photos"].to_s
-    file.puts "<img src='#{info_hash["photos"][0]['img_src']}'>"
-  end
-end
-=end
 
 def buid_web_page(info_hash)
     photos = info_hash["photos"].map {|photo| photo["img_src"]}
@@ -59,6 +51,7 @@ def buid_web_page(info_hash)
             width: 48px;
             height: 48px;
         }
+
         .gallery_main img{
             width: 100%;
             min-height: 15vw;
@@ -90,7 +83,7 @@ def buid_web_page(info_hash)
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">Inicio</a>
+                            <a class="nav-link active" href="#">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#mars_rover">Mars Rovers</a>
@@ -99,7 +92,7 @@ def buid_web_page(info_hash)
                             <a class="nav-link" href="#gallery">Gallery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contacto</a>
+                            <a class="nav-link" href="#contact">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -146,11 +139,11 @@ def buid_web_page(info_hash)
     gallery_main = '
     <!-- GALLERY -->
     <div class="container" id="gallery">
-        <ul class="row gallery_main list-style-none">
+        <ul class="row gallery_main" style="list-style: none">
     '
     gallery = ''
 
-footer = '
+    footer = '
         </ul>
     </div>
     <footer class="container-fluid bg-secondary text-white" id="contact">
@@ -204,7 +197,7 @@ def photos_count(p_hash)
     result = {}
 
     p_hash["photos"].each do |photo|
-        if result.has_key?(photo["camera"]["full_name"])
+        if result[photo["camera"]["full_name"]]
             result[photo["camera"]["full_name"]] += 1
         else
             result[photo["camera"]["full_name"]] = 1
